@@ -24,7 +24,7 @@ var webpackBuild = require("freedom-middleware-webpack2");
   var params = {
     port: 9090,
     env: "dev",
-    publicPath: `//static.51talk.com/oneTomany/0.0.1`,
+    publicPath: `//static.xxx.com/oneTomany/0.0.1`,
     build: `build`,
     proxy: {
       context: ["/api", "/auth","/award"],
