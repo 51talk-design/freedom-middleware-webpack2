@@ -81,5 +81,14 @@ module.exports = function () {
 };
 ```
 
+### 项目目录
 
+- 相关代码放到/src/scripts下面(**主要是约定了入口文件必须放到/src/scripts下面的某个目录里面，比如：/src/scripts/entry**)
+
+```
+|-webpack2-demo
+	|-src
+		|-scripts
+			|-entry
+```
 
