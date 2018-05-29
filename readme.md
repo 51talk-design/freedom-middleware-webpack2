@@ -42,7 +42,7 @@ var webpackBuild = require("freedom-middleware-webpack2");
 
 ### freedom-middleware-webpack2构建中间件的参数说明
 
-```json
+```js
 {
   "port":"本地环境dev启动的端口后",
   "env":"环境变量，dev:开发环境；prod：生成环境",
