@@ -88,8 +88,8 @@ module.exports = function () {
 
 ```
 |-webpack2-demo
-	|-src
-		|-scripts
-			|-entry
+  |-src
+    |-scripts
+      |-entry
 ```
 
