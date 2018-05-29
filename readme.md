@@ -93,3 +93,4 @@ module.exports = function () {
       |-entry
 ```
 
+- **请参考demo目录下的测试项目**
