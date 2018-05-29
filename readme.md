@@ -24,6 +24,7 @@ var webpackBuild = require("freedom-middleware-webpack2");
   var params = {
     port: 9090,
     env: "dev",
+    entryDir:"entry",//编译入口目录，位于项目/根目录/src/entry
     publicPath: `//static.xxx.com/oneTomany/0.0.1`,
     build: `build`,
     proxy: {
@@ -45,11 +46,12 @@ var webpackBuild = require("freedom-middleware-webpack2");
 {
   "port":"本地环境dev启动的端口后",
   "env":"环境变量，dev:开发环境；prod：生成环境",
+  "entryDir":"entry",//webpack编译入口目录，可选参数，此参数不传，默认查找的编译入口为entry，编译入口的目录必须位于/根目录/src/下面
   "publicPath":"构建资源的替换路径，比如：css中的图片路径",
   "build":"生产环境prod构建的资源存放的目录，在dev环境中该值忽略",
-  "proxy":{//反向代理设置
+  "proxy":{ //反向代理设置
     "context":["/api", "/auth","/award"],//要拦截的url
-    "options":{//设置代理端口
+    "options":{ //设置代理端口
       "target": 'http://localhost:8080'	
     }
   }
