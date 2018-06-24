@@ -12,6 +12,8 @@ module.exports = {
           'ie > 8']
       }
     ),
-    require('cssnano')()
+    require('cssnano')({
+		safe: true
+	})
   ]
 }
