@@ -2,7 +2,7 @@
 
 该中间件使用webpack2对项目进行构建，中间件统一管理了项目开发中大概95%以上的构建配置。使用该中间件对项目构建时，中间件在运行的时候会自动合并项目中的webpack.config.js(**构建项目必须存在此文件**)文件，然后再进行项目的构建。
 
-[![npm](https://img.shields.io/npm/l/freedom-middleware-webpack2.svg)](LICENSE.md)
+[![npm](https://img.shields.io/npm/l/freedom-middleware-webpack2.svg)](LICENSE)
 [![NPM Version](https://img.shields.io/npm/v/freedom-middleware-webpack2.svg)](https://www.npmjs.com/package/freedom-middleware-webpack2)
 [![npm](https://img.shields.io/npm/dt/freedom-middleware-webpack2.svg)](https://www.npmjs.com/package/freedom-middleware-webpack2)
 
