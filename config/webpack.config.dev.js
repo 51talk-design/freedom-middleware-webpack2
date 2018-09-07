@@ -3,7 +3,7 @@ var webpack = require("webpack");
 //var Visualizer = require('webpack-visualizer-plugin');
 var path = require("path");
 var baseDir = process.cwd(); //当前项目目录
-module.exports = function (entries, entryMap, isMultiDevice = false) {
+module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = baseDir) {
   let webpackConfig = {
     cache: true,
     profile: true,

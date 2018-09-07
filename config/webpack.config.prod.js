@@ -6,7 +6,7 @@ var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var path = require("path");
 var autoprefixer = require('autoprefixer');
 var baseDir = process.cwd(); //当前项目目录
-module.exports = function (entries, entryMap, isMultiDevice = false) {
+module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = baseDir) {
   //提取css的loader配置常量
   const extractCssLoadersConf = {
     css: ExtractTextPlugin.extract({
@@ -14,8 +14,8 @@ module.exports = function (entries, entryMap, isMultiDevice = false) {
       use: [
         {
           loader: "css-loader",
-          options:{
-            importLoaders:1
+          options: {
+            importLoaders: 1
           }
         },
         {
@@ -28,8 +28,8 @@ module.exports = function (entries, entryMap, isMultiDevice = false) {
       use: [
         {
           loader: "css-loader",
-          options:{
-            importLoaders:2
+          options: {
+            importLoaders: 2
           }
         },
         {
@@ -45,8 +45,8 @@ module.exports = function (entries, entryMap, isMultiDevice = false) {
       use: [
         {
           loader: "css-loader",
-          options:{
-            importLoaders:3
+          options: {
+            importLoaders: 3
           }
         },
         {
