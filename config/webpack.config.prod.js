@@ -6,7 +6,7 @@ var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var path = require("path");
 var autoprefixer = require('autoprefixer');
 //var baseDir = process.cwd(); //当前项目目录
-module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = process.cwd()) {
+module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = process.cwd(), buildDir = "") {
   //提取css的loader配置常量
   const extractCssLoadersConf = {
     css: ExtractTextPlugin.extract({
@@ -94,12 +94,11 @@ module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = p
       ]
     },
     plugins: [
-      new CleanWebpackPlugin(
-        ["build"], {
-          root: baseDir, //根目录
-          verbose: true, //开启在控制台输出信息
-          dry: false //启用删除文件
-        }),
+      new CleanWebpackPlugin(["build"], {
+        root: buildDir ? buildDir.replace(/build/gi, "") : baseDir, //根目录
+        verbose: true, //开启在控制台输出信息
+        dry: false //启用删除文件
+      }),
       new webpack.HashedModuleIdsPlugin()
     ]
   };

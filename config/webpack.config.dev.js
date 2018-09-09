@@ -3,13 +3,12 @@ var webpack = require("webpack");
 //var Visualizer = require('webpack-visualizer-plugin');
 var path = require("path");
 //var baseDir = process.cwd(); //当前项目目录
-module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = process.cwd()) {
+module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = process.cwd(), buildDir = "") {
   let webpackConfig = {
     cache: true,
     profile: true,
     module: {
-      rules: [
-        {
+      rules: [{
           test: /\.vue$/,
           exclude: /(node_modules|bower_components)/,
           use: [{
@@ -84,7 +83,7 @@ module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = p
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin()
   );
-  webpackConfig.devtool = "cheap-source-map";//"cheap-module-source-map";//"cheap-source-map";
+  webpackConfig.devtool = "cheap-source-map"; //"cheap-module-source-map";//"cheap-source-map";
 
   return webpackConfig;
 };
