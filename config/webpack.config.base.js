@@ -237,7 +237,13 @@ module.exports = async function (params) {
 
   //根据环境变量，进行配置文件的merge,同时合并外部的webpack.config.js文件
   let extendConf = require(`${baseDir}/webpack.config.js`)();
-  let conf = require(`./webpack.config.${env}.js`)(entries, entryMap, params.isMultiDevice, baseDir);
+  let conf = require(`./webpack.config.${env}.js`)(
+    entries,
+    entryMap,
+    params.isMultiDevice,
+    baseDir,
+    buidDir
+  );
   let compiledConf = webpackMerge.smart(baseConf, conf);
   compiledConf = webpackMerge.smart(compiledConf, extendConf);
   //自动生成入口文件放到页面引入，入口js名必须和入口文件名相同

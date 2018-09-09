@@ -1,6 +1,6 @@
 {
   "name": "freedom-middleware-webpack2",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "webpack2前端项目开发构建中间件，方便统一管理前端项目中95%以上的构建工作",
   "main": "index.js",
   "directories": {
