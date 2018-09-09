@@ -14,6 +14,9 @@ var srcDir = path.resolve(baseDir, 'src'); //源码目录
 var colors = require("colors");
 const chalk = require("chalk");
 module.exports = async function (params) {
+	if (params.root) {
+		srcDir = path.resolve(params.root, 'src');
+	}
 	var env = params.env || (process.env.NODE_ENV || "dev");
 	process.env.NODE_ENV = env;
 	baseConf = await baseConfigFn(params);

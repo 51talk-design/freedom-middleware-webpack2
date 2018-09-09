@@ -2,8 +2,8 @@ var webpack = require("webpack");
 //var WebpackBundleSizeAnalyzerPlugin = require('webpack-bundle-size-analyzer').WebpackBundleSizeAnalyzerPlugin;
 //var Visualizer = require('webpack-visualizer-plugin');
 var path = require("path");
-var baseDir = process.cwd(); //当前项目目录
-module.exports = function (entries, entryMap, isMultiDevice = false) {
+//var baseDir = process.cwd(); //当前项目目录
+module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = process.cwd()) {
   let webpackConfig = {
     cache: true,
     profile: true,

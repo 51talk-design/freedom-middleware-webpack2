@@ -4,9 +4,9 @@ const fsExtra = require('fs-extra');
 const webpack = require("webpack");
 const webpackMerge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); //打包时候连同html一起打包
-const baseDir = process.cwd(); //当前项目目录
-const srcDir = path.resolve(baseDir, 'src');//源码目录
-const webpackBuidPath = path.resolve(baseDir, '__build'); //webpack 编译的虚拟目录
+let baseDir = process.cwd(); //当前项目目录
+let srcDir = path.resolve(baseDir, 'src'); //源码目录
+let webpackBuidPath = path.resolve(baseDir, '__build'); //webpack 编译的虚拟目录
 
 //入口文件处理对象
 let entryHandler = {
@@ -48,7 +48,7 @@ let entryHandler = {
       let paths = [];
       paths.push(entryPath);
       if (entry) {
-        if (!isMultiDevice)//不适配pc跟h5
+        if (!isMultiDevice) //不适配pc跟h5
           map[entry] = paths;
         else {
           if (dir.indexOf("h5/") > -1) {
@@ -65,19 +65,7 @@ let entryHandler = {
     return map;
   }
 };
-//复制相关配置到项目根目录
-if (!fs.existsSync(`${baseDir}/.babelrc`)) {
-  fsExtra.copySync(path.join(__dirname, `../.babelrc`), `${baseDir}/.babelrc`);
-}
-if (!fs.existsSync(`${baseDir}/tsconfig.json`)) {
-  fsExtra.copySync(path.join(__dirname, `../tsconfig.json`), `${baseDir}/tsconfig.json`);
-}
-if (!fs.existsSync(`${baseDir}/postcss.config.js`)) {
-  fsExtra.copySync(path.join(__dirname, `../postcss.config.js`), `${baseDir}/postcss.config.js`);
-}
-if (!fs.existsSync(`${baseDir}/webpack.config.js`)) {
-  fsExtra.copySync(path.join(__dirname, `../webpack.config.js`), `${baseDir}/webpack.config.js`);
-}
+
 /**
  * webpack构建的基本配置
  * @param {object} params
@@ -90,11 +78,27 @@ if (!fs.existsSync(`${baseDir}/webpack.config.js`)) {
  * }
  */
 module.exports = async function (params) {
+  baseDir = params.root || baseDir;
+  //复制相关配置到项目根目录
+  if (!fs.existsSync(`${baseDir}/.babelrc`)) {
+    fsExtra.copySync(path.join(__dirname, `../.babelrc`), `${baseDir}/.babelrc`);
+  }
+  if (!fs.existsSync(`${baseDir}/tsconfig.json`)) {
+    fsExtra.copySync(path.join(__dirname, `../tsconfig.json`), `${baseDir}/tsconfig.json`);
+  }
+  if (!fs.existsSync(`${baseDir}/postcss.config.js`)) {
+    fsExtra.copySync(path.join(__dirname, `../postcss.config.js`), `${baseDir}/postcss.config.js`);
+  }
+  if (!fs.existsSync(`${baseDir}/webpack.config.js`)) {
+    fsExtra.copySync(path.join(__dirname, `../webpack.config.js`), `${baseDir}/webpack.config.js`);
+  }
   //设置环境变量
   let env = params.env || (process.env.NODE_ENV || "prod");
   process.env.NODE_ENV = env;
   //项目编译后的保存目录
-  let buidDir = path.normalize(path.resolve(baseDir, `${params.build}/`));
+  let buidDir = params.build //path.normalize(path.resolve(baseDir, `${params.build}/`));
+  let srcDir = path.resolve(baseDir, 'src'); //源码目录
+  let webpackBuidPath = path.resolve(baseDir, '__build'); //webpack 编译的虚拟目录
   //项目编译入口目录
   let entryDir = params.entryDir || "entry";
   let entries = null;
@@ -125,13 +129,13 @@ module.exports = async function (params) {
       sourceMapFilename: "[file].map",
       filename: env == "dev" ? '[name].js' : 'scripts/[name].js',
       /** 
-        * chunkFilename用来打包require.ensure方法中引入的模块,如果该方法中没有引入任何模块则不会生成任何chunk块文件
-        * 比如在main.js文件中,require.ensure([],function(require){alert(11);}),这样不会打包块文件
-        * 只有这样才会打包生成块文件require.ensure([],function(require){alert(11);require('./greeter')})
-        * 或者这样require.ensure(['./greeter'],function(require){alert(11);})
-        * chunk的hash值只有在require.ensure中引入的模块发生变化,hash值才会改变
-        * 注意:对于不是在ensure方法中引入的模块,此属性不会生效,只能用CommonsChunkPlugin插件来提取
-      **/
+       * chunkFilename用来打包require.ensure方法中引入的模块,如果该方法中没有引入任何模块则不会生成任何chunk块文件
+       * 比如在main.js文件中,require.ensure([],function(require){alert(11);}),这样不会打包块文件
+       * 只有这样才会打包生成块文件require.ensure([],function(require){alert(11);require('./greeter')})
+       * 或者这样require.ensure(['./greeter'],function(require){alert(11);})
+       * chunk的hash值只有在require.ensure中引入的模块发生变化,hash值才会改变
+       * 注意:对于不是在ensure方法中引入的模块,此属性不会生效,只能用CommonsChunkPlugin插件来提取
+       **/
       chunkFilename: env == "dev" ? '[id].common.js' : 'scripts/[id].common.min.js',
       publicPath: params.publicPath ? `${params.publicPath}/` : "" //页面中引入的url路径前缀（css，js） 相对路径 ，如果是绝对路径可以替换成cdn 路径
     },
@@ -145,8 +149,7 @@ module.exports = async function (params) {
       })
     ],
     module: {
-      rules: [
-        {
+      rules: [{
           test: /\.(tpl|ejs)$/,
           exclude: /(node_modules|bower_components)/,
           use: [{
@@ -182,40 +185,37 @@ module.exports = async function (params) {
         },
         {
           test: /\.(jpe?g|png|gif|svg)$/i,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                limit: 2,
-                mimetype: "images/jpg",
-                name: `images/[name]_[hash].[ext]?tt=${new Date().getTime()}`
-              }
+          use: [{
+            loader: 'url-loader',
+            options: {
+              limit: 2,
+              mimetype: "images/jpg",
+              name: `images/[name]_[hash].[ext]?tt=${new Date().getTime()}`
             }
-          ]
+          }]
         },
         {
           test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?/i,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                limit: 8124,
-                name: "fonts/[name].[ext]"
-              }
+          use: [{
+            loader: 'url-loader',
+            options: {
+              limit: 8124,
+              name: "fonts/[name].[ext]"
             }
-          ]
+          }]
         }
       ]
     },
     resolve: {
-      alias: {//需要设置哪些库的别名
+      alias: { //需要设置哪些库的别名
 
       },
       modules: [
+        process.cwd() + "/node_modules",
         baseDir + "/node_modules",
         srcDir
       ],
-      extensions: [//开启后缀名的自动补全
+      extensions: [ //开启后缀名的自动补全
         '.tsx',
         '.ts',
         '.js',
@@ -230,14 +230,14 @@ module.exports = async function (params) {
         '.sass'
       ]
     },
-    externals: {//指定不需要编译的外部依赖
+    externals: { //指定不需要编译的外部依赖
       //"react": 'React',
     }
   };
 
   //根据环境变量，进行配置文件的merge,同时合并外部的webpack.config.js文件
   let extendConf = require(`${baseDir}/webpack.config.js`)();
-  let conf = require(`./webpack.config.${env}.js`)(entries, entryMap, params.isMultiDevice);
+  let conf = require(`./webpack.config.${env}.js`)(entries, entryMap, params.isMultiDevice, baseDir);
   let compiledConf = webpackMerge.smart(baseConf, conf);
   compiledConf = webpackMerge.smart(compiledConf, extendConf);
   //自动生成入口文件放到页面引入，入口js名必须和入口文件名相同
@@ -279,7 +279,7 @@ module.exports = async function (params) {
         compiledConf.plugins.push(new HtmlWebpackPlugin(conf)); //打包时候连同html一起打包
       }
     });
-  } else {//一个项目配置pc、h5的话，src下必须存放html目录
+  } else { //一个项目配置pc、h5的话，src下必须存放html目录
     //把所有的html目录的html文件读取出来
     getAllPages(`${srcDir}/html`);
     pages.forEach(function (filename) {

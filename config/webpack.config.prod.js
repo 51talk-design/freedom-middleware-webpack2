@@ -5,17 +5,16 @@ var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 //var ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 var path = require("path");
 var autoprefixer = require('autoprefixer');
-var baseDir = process.cwd(); //当前项目目录
-module.exports = function (entries, entryMap, isMultiDevice = false) {
+//var baseDir = process.cwd(); //当前项目目录
+module.exports = function (entries, entryMap, isMultiDevice = false, baseDir = process.cwd()) {
   //提取css的loader配置常量
   const extractCssLoadersConf = {
     css: ExtractTextPlugin.extract({
       fallback: 'style-loader',
-      use: [
-        {
+      use: [{
           loader: "css-loader",
-          options:{
-            importLoaders:1
+          options: {
+            importLoaders: 1
           }
         },
         {
@@ -25,11 +24,10 @@ module.exports = function (entries, entryMap, isMultiDevice = false) {
     }),
     less: ExtractTextPlugin.extract({
       fallback: 'style-loader',
-      use: [
-        {
+      use: [{
           loader: "css-loader",
-          options:{
-            importLoaders:2
+          options: {
+            importLoaders: 2
           }
         },
         {
@@ -42,11 +40,10 @@ module.exports = function (entries, entryMap, isMultiDevice = false) {
     }),
     scss: ExtractTextPlugin.extract({
       fallback: 'style-loader',
-      use: [
-        {
+      use: [{
           loader: "css-loader",
-          options:{
-            importLoaders:3
+          options: {
+            importLoaders: 3
           }
         },
         {
@@ -63,8 +60,7 @@ module.exports = function (entries, entryMap, isMultiDevice = false) {
   };
   let webpackConfig = {
     module: {
-      rules: [
-        {
+      rules: [{
           test: /\.vue$/,
           exclude: /(node_modules|bower_components)/,
           use: [{
@@ -99,11 +95,10 @@ module.exports = function (entries, entryMap, isMultiDevice = false) {
     },
     plugins: [
       new CleanWebpackPlugin(
-        ["build"],
-        {
-          root: baseDir,       　　　　　　　　　　//根目录
-          verbose: true,        　　　　　　　　　　//开启在控制台输出信息
-          dry: false        　　　　　　　　　　//启用删除文件
+        ["build"], {
+          root: baseDir, //根目录
+          verbose: true, //开启在控制台输出信息
+          dry: false //启用删除文件
         }),
       new webpack.HashedModuleIdsPlugin()
     ]
@@ -156,14 +151,12 @@ module.exports = function (entries, entryMap, isMultiDevice = false) {
     );
   }
 
-  webpackConfig.plugins.push(new UglifyJsPlugin(
-    {
-      compress: {
-        warnings: false,
-        drop_console: true
-      }
+  webpackConfig.plugins.push(new UglifyJsPlugin({
+    compress: {
+      warnings: false,
+      drop_console: true
     }
-  ));
+  }));
   //并行压缩
   /*  webpackConfig.plugins.push(
      new ParallelUglifyPlugin({
