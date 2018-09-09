@@ -1,5 +1,5 @@
 {
   "devDependencies": {
-    "freedom-middleware-webpack2": "^1.0.4"
+    "freedom-middleware-webpack2": "2.0.0"
   }
 }

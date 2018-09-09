@@ -27,10 +27,10 @@ var webpackBuild = require("freedom-middleware-webpack2");
 (async function () {
   var params = {
     port: 9090,
-    env: "dev",
+    env: "dev",//环境变量，dev:开发环境；prod：生成环境
     entryDir:"entry",//编译入口目录，位于项目/根目录/src/scripts/entry
     publicPath: `//static.xxx.com/oneTomany/0.0.1`,
-    build: `build`,
+    build: `build`,//生产环境prod构建的资源存放的目录，在dev环境中该值忽略
     proxy: {
       context: ["/api", "/auth","/award"],
       options: {
@@ -48,6 +48,7 @@ var webpackBuild = require("freedom-middleware-webpack2");
 
 ```js
 {
+  "root":"",//新增参数，根目录，不写默认为process.cwd()
   "port":"本地环境dev启动的端口后",
   "env":"环境变量，dev:开发环境；prod：生成环境",
   "entryDir":"entry",//webpack编译入口目录，可选参数，此参数不传，默认查找的编译入口为entry，编译入口的目录必须位于/根目录/src/scripts/这个目录下面
@@ -61,6 +62,8 @@ var webpackBuild = require("freedom-middleware-webpack2");
   }
 }
 ```
+
+**dev环境下，文件编译的目录存储于根目录下的__build目录**
 
 ### 备注
 
@@ -97,4 +100,11 @@ module.exports = function () {
       |-entry
 ```
 
-- **请参考demo目录下的测试项目**
+### 版本更新说明
+- **2.0.0**
+
+  1. 此版本增加了一个入参参数 **root**，使用者可以传入自己指定的根目录，如果不指定**root**，默认为当前执行项目的根目录，即 **root** 默认值为process.cwd()
+  2. 修改入参 **build** 使用者必须传入绝对路径
+
+### 请参考demo目录下的测试项目
+
