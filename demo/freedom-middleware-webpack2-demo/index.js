@@ -4,7 +4,7 @@ var baseDir = process.cwd();
 (async function () {
   var params = {
     port: 9090,
-    env: "dev",
+    env: "prod",
     entryDir: "entry", //编译入口目录，位于项目/根目录/src/entry
     publicPath: ``,
     build: path.resolve(baseDir, "build"),
