@@ -1,2 +1,9 @@
 node_modules
-
+.history/
+.DS_Store
+.idea
+*/**/node_modulesa
+yarn.lock
+yarn-error.log
+.vscode
+package-lock.json

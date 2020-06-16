@@ -1,6 +1,6 @@
 {
-  "name": "freedom-middleware-webpack2",
-  "version": "2.0.2",
+  "name": "@51npm/freedom-middleware-webpack2",
+  "version": "1.0.1",
   "description": "webpack2前端项目开发构建中间件，方便统一管理前端项目中95%以上的构建工作",
   "main": "index.js",
   "directories": {
@@ -9,7 +9,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "liangjiecan",
+  "author": "shangshanruoshui",
+  "maintainers": [
+    {
+      "name": "shangshanruoshui",
+      "email": "gxgongxueyuan123@163.com"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "shangshanruoshui",
+      "email": "gxgongxueyuan123@163.com"
+    }
+  ],
   "keywords": [
     "javascript",
     "webpack",
@@ -22,7 +34,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ljcheibao/freedom-middleware-webpack2.git"
+    "url": "https://github.com/51talk-design/freedom-middleware-webpack2"
   },
   "dependencies": {
     "cssnano": "^3.10.0",

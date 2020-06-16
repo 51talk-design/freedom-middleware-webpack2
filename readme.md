@@ -2,10 +2,6 @@
 
 该中间件使用webpack2对项目进行构建，中间件统一管理了项目开发中大概95%以上的构建配置。使用该中间件对项目构建时，中间件在运行的时候会自动合并项目中的webpack.config.js(**构建项目必须存在此文件**)文件，然后再进行项目的构建。
 
-[![npm](https://img.shields.io/npm/l/freedom-middleware-webpack2.svg)](LICENSE)
-[![NPM Version](https://img.shields.io/npm/v/freedom-middleware-webpack2.svg)](https://www.npmjs.com/package/freedom-middleware-webpack2)
-[![npm](https://img.shields.io/npm/dt/freedom-middleware-webpack2.svg)](https://www.npmjs.com/package/freedom-middleware-webpack2)
-
 ### freedom-middleware-webpack2构建中间件支持构建的项目
 
 - 使用less、sass、ts、vue、ejs,jade以及es6开发的项目
@@ -17,13 +13,13 @@
 ### freedom-middleware-webpack2安装
 
 ```
-npm install freedom-middleware-webpack2
+npm install @51npm/freedom-middleware-webpack2
 ```
 
 ### freedom-middleware-webpack2构建中间件使用
 
 ```js
-var webpackBuild = require("freedom-middleware-webpack2");
+var webpackBuild = require("@51npm/freedom-middleware-webpack2");
 (async function () {
   var params = {
     port: 9090,
@@ -87,28 +83,9 @@ module.exports = function () {
   return extendConf;
 };
 ```
-
-### 项目目录
-
-- **中间件对于项目结构做了约束，指定项目入口文件的目录必须位于/src/scripts/ 这个目录下面**
-- 相关代码放到/src/scripts下面(**主要是约定了入口文件必须放到/src/scripts下面的某个目录里面，比如：/src/scripts/entry**)
-
-```
-|-webpack2-demo
-  |-src
-    |-scripts
-      |-entry
-```
-
 ### 版本更新说明
-- **2.0.0**
+| 发布时间   | 发布版本 | 发布功能   |
+| ---------- | -------- | ---------- |
+| 2020-06-16 | 1.0.1    | 修改readme |
 
-  1. 此版本增加了一个入参参数 **root**，使用者可以传入自己指定的根目录，如果不指定**root**，默认为当前执行项目的根目录，即 **root** 默认值为process.cwd()
-  2. 修改入参 **build** 使用者必须传入绝对路径
-- **2.0.1**
-  1. fix 在build模式下，当指定的build目录不在当前项目的根目录下，上一次build的目录不清除的问题
-- **2.0.2**
-  1. 增加core-js库的版本默认为**^2.6.0**
-
-### 请参考demo目录下的测试项目
 
